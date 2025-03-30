@@ -1,0 +1,24 @@
+# Core dependencies
+torch>=2.1.0
+diffusers>=0.28.2
+transformers>=4.47.2
+sentencepiece>=0.1.96
+huggingface-hub~=0.25.2
+einops
+timm
+
+# Inference script dependencies
+accelerate
+matplotlib
+imageio[ffmpeg]
+opencv-python
+numpy
+pillow
+
+# OpenAI API dependencies
+openai>=1.12.0
+python-dotenv>=1.0.0
+requests>=2.31.0
+
+# Testing dependencies
+pytest 

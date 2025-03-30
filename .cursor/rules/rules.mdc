@@ -1,0 +1,205 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Cursor AI Guidelines
+<!-- Comprehensive coding standards and workflow guidelines to be applied to all interactions. -->
+
+## Code Organization
+- Imports: grouped by source (standard library, third-party, local)
+- Component structure: props, state, effects, handlers, render
+- Max file length: 300 lines (prefer composition over large files)
+- Simplicity: Always prefer simple solutions over complex ones
+- Avoid duplication: Check for existing similar code before implementing new functionality
+- File scripts: Avoid writing one-off scripts in files when possible
+- Cleanliness: Keep the codebase very clean and organized
+- Indentation: Use two spaces for indentation in all code files
+
+## Implementation Strategy
+- Change scope: Only make changes that are requested or well understood and related to the task
+- Impact assessment: Always consider what other methods and areas of code might be affected by changes
+- Fix approach: Exhaust existing implementation options before introducing new patterns or technology
+- Environment awareness: Code should account for different environments: dev, test, and prod
+- Env file: Never overwrite .env files without explicit permission
+- Test-Driven Development: Follow the test-first approach for all implementation tasks
+
+## File Maintenance
+
+### Critical System Files
+- `projectRootFolder/.cursor/rules/rules.mdc` is the primary source of truth for all guidelines and must NEVER be updated or modified
+- All guidelines in `rules.mdc` take precedence over any other documentation
+- `projectRootFolder/.user/tasks.md` and `projectRootFolder/.user/context.md` are critical system artifacts
+- These files must be preserved and maintained across sessions
+- Maintain the integrity and format of these files at all times
+- When changes are made to any file, ensure proper synchronization between files
+- Any modifications to the structure or format of these files must be explicitly approved by the user
+
+## Task Management and Tracking
+
+### Task Tracking Process
+1. Convert high-level user queries to detailed step-by-step tasks and subtasks
+2. Record all user queries and corresponding tasks in `projectRootFolder/.user/tasks.md`
+3. For each task and subtask, develop test cases BEFORE writing implementation code
+4. Document test cases directly with the related tasks in `tasks.md` using appropriate indentation
+5. Implement code only after test cases are fully defined
+6. Validate all implementations against the predefined test cases
+7. Include checkboxes for test creation and code implementation as separate subtasks
+8. Review tasks at the end of every response and mark completed subtasks
+9. Reopen resolved tasks if bugs are reported later
+10. Check for unmarked tasks at the beginning of every response
+11. **MANDATORY:** Use the tasks and subtasks in `tasks.md` as the EXACT step-by-step execution plan
+12. **MANDATORY:** Follow tasks strictly in the order they are listed in `tasks.md`
+13. **MANDATORY:** Do not deviate from the execution plan unless explicitly instructed by the user
+14. **MANDATORY:** Refer back to `tasks.md` throughout the implementation process
+15. **MANDATORY:** If implementation reveals the need for plan modification, first update `tasks.md` with the revised approach before proceeding
+
+### Task Format and Structure
+- **MANDATORY:** `tasks.md` serves as the single source of truth for all user interactions and task progress
+- **MANDATORY:** Update `tasks.md` TWICE during each interaction:
+  1. At the BEGINNING: Add the user query and new tasks
+  2. At the END: Mark completed subtasks and review progress
+- **MANDATORY:** All tasks must include detailed subtasks with checkboxes, including specific subtasks for:
+  1. Test case development
+  2. Code implementation
+  3. Validation against test cases
+- **MANDATORY:** All incomplete subtasks must be marked with [ ]
+- **MANDATORY:** All completed subtasks must be marked with [x] at the end of the response
+- **MANDATORY:** Only subtasks should have checkboxes (not main tasks)
+- **MANDATORY:** A task is considered complete when all its subtasks are marked complete
+- **MANDATORY:** For each user query, a section must be added to `tasks.md` that includes:
+  1. The exact user query text in quotes as a single continuous string with all line breaks removed
+  2. Tasks derived from that query
+  3. Detailed subtasks for each task, including test creation, implementation, and test validation
+- **MANDATORY:** When recording user queries that contain multiple lines, convert them to a single line by removing all line breaks
+- **MANDATORY:** Every implementation must be validated by running corresponding tests
+- **MANDATORY:** `tasks.md` must ONLY contain the exact format shown in the example below, without any summaries, next steps, or additional commentary
+- **TASK FORMAT:** Use the following format:
+  ```
+  ## User Query: "[Exact query text as a single string with all line breaks removed]"
+  - Task: [Brief task description]
+    - [ ] Define test cases for [specific functionality]
+      - [ ] Unit test: [test case description]
+      - [ ] Service test: [test case description]
+      - [ ] API test: [test case description]
+    - [ ] Implement [specific functionality]
+      - [ ] [Specific implementation subtask]
+      - [ ] [Specific implementation subtask]
+    - [ ] Run tests and validate implementation
+      - [ ] Run unit tests for [specific functionality]
+      - [ ] Run service tests for [specific functionality]
+      - [ ] Run API tests for [specific functionality]
+  - Task: [Brief task description]
+    - [ ] Define test cases for [specific functionality]
+      - [ ] Unit test: [test case description]
+      - [ ] Service test: [test case description]
+      - [ ] API test: [test case description]
+    - [ ] Implement [specific functionality]
+      - [ ] [Specific implementation subtask]
+      - [ ] [Specific implementation subtask]
+    - [ ] Run tests and validate implementation
+      - [ ] Run unit tests for [specific functionality]
+      - [ ] Run service tests for [specific functionality]
+      - [ ] Run API tests for [specific functionality]
+  ```
+- Organize tasks chronologically by user query
+- Categorize tasks logically with clear headings when appropriate
+- Treat EVERY user query, no matter how small, as a task that requires tracking
+
+## Testing Guidelines
+
+### Test Types and Focus
+- **Unit Tests**: Test individual functions, methods, and components in isolation
+- **Service Tests**: Test service layer functionality with mocked external dependencies
+- **API Tests**: Test API endpoints with expected request/response patterns
+- **UI Tests**: Excluded from standard test requirements unless specifically requested
+
+### Test File Location and Organization
+- Test files should be located adjacent to the code they test
+  - For component files: Place tests in a `__tests__` directory at the same level
+  - For utility functions: Create a test file with the same name and `.test` or `.spec` suffix
+- Example file structure:
+  ```
+  src/
+  ├── components/
+  │   ├── Button/
+  │   │   ├── Button.js
+  │   │   └── __tests__/
+  │   │       └── Button.test.js
+  │   └── ...
+  ├── services/
+  │   ├── auth.js
+  │   └── auth.test.js
+  ├── utils/
+  │   ├── formatter.js
+  │   └── formatter.test.js
+  └── ...
+  ```
+
+### Test Naming Conventions
+- Test files: `[filename].(test|spec).[ext]`
+- Test suites: Descriptive of the module/component being tested
+- Test cases: Should clearly describe the functionality being tested and expected outcome
+
+### Test Implementation Guidelines
+- Each test should be independent and not rely on the state from other tests
+- Use mocks for external dependencies and API calls
+- Tests should be deterministic (same input always produces same output)
+- Follow the AAA pattern: Arrange, Act, Assert
+- Prioritize test coverage for:
+  1. Core business logic
+  2. Edge cases and error handling
+  3. Integration points between modules
+
+## Project Progress Report
+
+### Purpose and Structure
+- The Project Progress Report (`context.md`) tracks the project's evolution
+- Use this report to understand the project's architectural approaches, features, and resolved issues
+- **MANDATORY:** Update the Project Progress Report whenever:
+  1. New architectural decisions are made
+  2. New features are implemented
+  3. Any bug fixes are implemented (all bug fixes must be recorded, regardless of size or significance)
+  4. Any changes affect project understanding
+- Organize the Progress Report in exactly three sections:
+  1. Technical approaches and architectural decisions
+  2. Implemented features
+  3. Resolved bugs
+- For each entry, include:
+  - A descriptive identifier or short title
+  - A clear, concise description
+  - References to relevant code areas or files
+- **MANDATORY:** Summarize any updates to the Progress Report at the end of your response
+- Never remove information from the Progress Report unless explicitly instructed
+- Prioritize solutions that align with previously documented technical approaches
+
+### Example Format for Project Progress Report
+```
+## Architectural Decisions
+
+- **[Architecture Pattern]** Implemented [pattern name] for [purpose] to enhance [benefit].
+- **[Framework Selection]** Adopted [Framework Name] for [component] to improve [benefit].
+
+## Implemented Features
+
+- **[Feature Name]** Developed functionality for [purpose] that enables users to [capability].
+- **[Optimization]** Enhanced [component] performance by [technique] resulting in [benefit].
+
+## Resolved Bugs
+
+- **[Bug ID/Description]** Fixed [issue description] in [file-name.js]
+- **[Bug ID/Description]** Resolved [issue description] affecting [component/feature]
+```
+
+## Token Limit Handling
+- Monitor token usage throughout long responses
+- If approaching token limits during a complex task:
+  1. Save current progress in relevant artifact files (`context.md` and `tasks.md`)
+  2. Summarize what has been accomplished so far
+  3. Outline what remains to be done
+  4. End with a clear question about continuing
+- When continuing from a previous token-limited response:
+  1. Briefly summarize what was accomplished
+  2. Continue where the previous response left off
+  3. Follow the same token limit protocol if needed again
+- Prioritize completing critical tasks before reaching token limits
