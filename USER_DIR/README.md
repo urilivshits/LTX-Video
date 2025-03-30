@@ -155,3 +155,15 @@ python USER_DIR/04_video_expander_diffusers.py --help
 - **Path Errors**: Always run scripts from the **project root directory**, one level above `USER_DIR`.
 - **CUDA/Memory Errors**: Ensure you have a compatible GPU and sufficient VRAM. Try reducing `--width`, `--height`, or `--num_frames`. The scripts will use CPU if CUDA isn't found, but it will be very slow.
 - **OpenAI Errors**: Ensure your API key is correct in the `.env` file at the project root and that the specified `--openai_model` is valid. 
+
+## Development Guidelines
+
+### Code Linting
+
+This project uses [ruff](https://github.com/astral-sh/ruff) for code linting to maintain code quality. To ensure your code passes linting checks:
+
+1. Install ruff: `pip install ruff`
+2. Run the linting fix script: `python USER_DIR/fix_linting.py`
+3. See `USER_DIR/LINTING.md` for detailed guidelines and common fixes
+
+GitHub Actions will automatically check for linting issues on all pull requests. 

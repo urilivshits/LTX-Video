@@ -22,6 +22,25 @@ One-liner example:
     python USER_DIR/01_text_to_video_diffusers.py
 """
 
+import os
+import torch
+import random
+from pathlib import Path
+from datetime import datetime
+import matplotlib.pyplot as plt
+from matplotlib import animation
+
+# For diffusers support
+try:
+    # Try importing directly (newer versions of diffusers)
+    from diffusers import LTXTextToVideoPipeline
+    print("Using standard LTXTextToVideoPipeline import")
+except ImportError:
+    # If that fails, ask user to update
+    print("ERROR: Could not import LTXTextToVideoPipeline. Please update your diffusers library:")
+    print("pip install --upgrade diffusers")
+    exit(1)
+
 # Copy-paste ready command:
 # python USER_DIR/01_text_to_video_diffusers.py --prompt "A beautiful cinematic scene with detailed textures and dramatic lighting" --width 1280 --height 720 --num_frames 241 --seed 42 --guidance_scale 3.0 --inference_steps 40 --fps 24
 
@@ -46,27 +65,6 @@ NEGATIVE_PROMPT = "Low resolution, inconsistent motion, visual artifacts, jitter
 GUIDANCE_SCALE = 3.0         # 1.0-5.0, higher values follow prompt more closely
 # =====================================================
 
-import os
-import torch
-import inspect
-import random
-from pathlib import Path
-from datetime import datetime
-from PIL import Image
-import matplotlib.pyplot as plt
-from matplotlib import animation
-
-# For diffusers support
-try:
-    # Try importing directly (newer versions of diffusers)
-    from diffusers import LTXTextToVideoPipeline
-    print("Using standard LTXTextToVideoPipeline import")
-except ImportError:
-    # If that fails, ask user to update
-    print("ERROR: Could not import LTXTextToVideoPipeline. Please update your diffusers library:")
-    print("pip install --upgrade diffusers")
-    exit(1)
-
 # One-liner for terminal:
 # python USER_DIR/01_text_to_video_diffusers.py
 #
@@ -79,7 +77,7 @@ MODEL_DIR = os.path.join(PROJECT_ROOT, "MODEL_DIR")
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "OUTPUT_DIR")
 MODEL_FILE = os.path.join(MODEL_DIR, "ltx-video-2b-v0.9.5.safetensors")
 
-print(f"Using directories:")
+print("Using directories:")
 print(f"  MODEL_DIR: {MODEL_DIR}")
 print(f"  OUTPUT_DIR: {OUTPUT_DIR}")
 print(f"  MODEL_FILE: {MODEL_FILE}")
@@ -111,7 +109,7 @@ else:
 width = WIDTH
 height = HEIGHT
 if width % 32 != 0 or height % 32 != 0:
-    print(f"Warning: Dimensions must be divisible by 32. Adjusting...")
+    print("Warning: Dimensions must be divisible by 32. Adjusting...")
     width = ((width - 1) // 32 + 1) * 32
     height = ((height - 1) // 32 + 1) * 32
     print(f"Adjusted dimensions: {width}x{height}")
@@ -122,7 +120,7 @@ print(f"Dimensions: {width}x{height}")
 print(f"Generating: {NUM_FRAMES} frames at {FPS} FPS ({NUM_FRAMES/FPS:.1f} seconds)")
 print(f"Prompt: '{PROMPT}'")
 print(f"Guidance scale: {GUIDANCE_SCALE}")
-print(f"Prompt enhancement: Enabled")
+print("Prompt enhancement: Enabled")
 print(f"Inference steps: {NUM_INFERENCE_STEPS}")
 
 # Generate a descriptive filename based on the prompt and parameters

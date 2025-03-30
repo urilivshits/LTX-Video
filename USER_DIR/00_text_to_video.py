@@ -21,6 +21,12 @@ One-liner example:
     python USER_DIR/00_text_to_video.py
 """
 
+import subprocess
+import os
+from pathlib import Path
+from datetime import datetime
+import random
+
 # Copy-paste ready command (direct inference.py equivalent):
 # python inference.py --ckpt_path MODEL_DIR/ltx-video-2b-v0.9.5.safetensors --prompt "A beautiful cinematic scene with detailed textures and dramatic lighting" --height 720 --width 1280 --num_frames 241 --seed 42 --output_path OUTPUT_DIR --device cuda --frame_rate 24 --prompt_enhancement_words_threshold 500 --num_inference_steps 40 --guidance_scale 3.0 --negative_prompt "Low resolution, inconsistent motion, visual artifacts, jitter, blur, distortion, unrealistic or misaligned frames, poor composition, dull lighting."
 
@@ -45,13 +51,6 @@ NEGATIVE_PROMPT = "Low resolution, inconsistent motion, visual artifacts, jitter
 GUIDANCE_SCALE = 3.0         # 1.0-5.0, higher values follow prompt more closely
 # =====================================================
 
-import subprocess
-import os
-import glob
-from pathlib import Path
-from datetime import datetime
-import random
-
 # One-liner for terminal:
 # python USER_DIR/00_text_to_video.py
 #
@@ -66,7 +65,7 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "OUTPUT_DIR")
 MODEL_FILE = os.path.join(MODEL_DIR, "ltx-video-2b-v0.9.5.safetensors")
 INFERENCE_SCRIPT = os.path.join(PROJECT_ROOT, "inference.py")
 
-print(f"Using directories:")
+print("Using directories:")
 print(f"  MODEL_DIR: {MODEL_DIR}")
 print(f"  OUTPUT_DIR: {OUTPUT_DIR}")
 print(f"  MODEL_FILE: {MODEL_FILE}")
@@ -99,7 +98,7 @@ else:
 width = WIDTH
 height = HEIGHT
 if width % 32 != 0 or height % 32 != 0:
-    print(f"Warning: Dimensions must be divisible by 32. Adjusting...")
+    print("Warning: Dimensions must be divisible by 32. Adjusting...")
     width = ((width - 1) // 32 + 1) * 32
     height = ((height - 1) // 32 + 1) * 32
     print(f"Adjusted dimensions: {width}x{height}")
@@ -135,7 +134,7 @@ print(f"Dimensions: {width}x{height}")
 print(f"Generating: {NUM_FRAMES} frames at {FPS} FPS ({NUM_FRAMES/FPS:.1f} seconds)")
 print(f"Prompt: '{PROMPT}'")
 print(f"Guidance scale: {GUIDANCE_SCALE}")
-print(f"Prompt enhancement: Enabled")
+print("Prompt enhancement: Enabled")
 print(f"Inference steps: {NUM_INFERENCE_STEPS}")
 print(f"Output will be saved to: {os.path.join(OUTPUT_DIR, output_filename)}")
 

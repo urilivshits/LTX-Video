@@ -73,7 +73,7 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "OUTPUT_DIR")
 MODEL_FILE = os.path.join(MODEL_DIR, "ltx-video-2b-v0.9.5.safetensors")
 INFERENCE_SCRIPT = os.path.join(PROJECT_ROOT, "inference.py")
 
-print(f"Using directories:")
+print("Using directories:")
 print(f"  MODEL_DIR: {MODEL_DIR}")
 print(f"  INPUT_DIR: {INPUT_DIR}")
 print(f"  OUTPUT_DIR: {OUTPUT_DIR}")
@@ -232,7 +232,7 @@ print(f"Adjusted dimensions for generation: {width}x{height} (must be divisible 
 print(f"Generating: {NUM_FRAMES} frames at {FPS} FPS ({NUM_FRAMES/FPS:.1f} seconds)")
 print(f"Prompt: '{PROMPT}'")
 print(f"Guidance scale: {GUIDANCE_SCALE}")
-print(f"Prompt enhancement: Enabled")
+print("Prompt enhancement: Enabled")
 print(f"Inference steps: {NUM_INFERENCE_STEPS}")
 print(f"Output will be saved to: {os.path.join(OUTPUT_DIR, output_filename)}")
 

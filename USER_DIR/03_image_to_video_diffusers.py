@@ -65,13 +65,12 @@ from datetime import datetime
 from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib import animation
-import json
 from dotenv import load_dotenv
 
 # Import our custom prompt improvement module
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to path
-from USER_DIR.prompt_improvement import analyze_and_improve_prompt, analyze_and_improve_prompt_from_image_object
+from USER_DIR.prompt_improvement import analyze_and_improve_prompt
 
 # Load environment variables (for OpenAI API key)
 load_dotenv()
@@ -127,7 +126,7 @@ INPUT_DIR = os.path.join(PROJECT_ROOT, "INPUT_DIR")  # Directory to look for inp
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "OUTPUT_DIR")
 MODEL_FILE = os.path.join(MODEL_DIR, "ltx-video-2b-v0.9.5.safetensors")
 
-print(f"Using directories:")
+print("Using directories:")
 print(f"  MODEL_DIR: {MODEL_DIR}")
 print(f"  INPUT_DIR: {INPUT_DIR}")
 print(f"  OUTPUT_DIR: {OUTPUT_DIR}")

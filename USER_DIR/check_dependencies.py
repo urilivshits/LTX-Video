@@ -1,7 +1,5 @@
 import sys
 import importlib
-import subprocess
-from pathlib import Path
 
 def check_package(package_name):
     try:

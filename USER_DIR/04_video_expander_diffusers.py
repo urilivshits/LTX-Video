@@ -61,13 +61,7 @@ ENHANCE_ALL_SEGMENTS = True  # Whether to enhance prompts for all segments or ju
 SEED = None             # Fixed seed ensures reproducible results, None generates a random seed each time. Using the same seed with identical parameters will generate the same video.
 
 # Prompt parameters
-POSITIVE_PROMPT = """A person standing naturally with a neutral expression. Their posture is relaxed but attentive, with occasional subtle movements including:
-- Natural blinking and breathing patterns
-- Slight shifts in weight from one foot to another
-- Minimal hand gestures and subtle head movements
-- Minor changes in facial expression showing mild interest
-
-The background is minimal and non-distracting, with soft lighting that accentuates the person's features without creating harsh shadows. The camera maintains a steady mid-shot framing that captures the person from mid-chest to head."""
+POSITIVE_PROMPT = ""
 
 NEGATIVE_PROMPT = "Low resolution, inconsistent motion, visual artifacts, jitter, blur, distortion, unnatural movement, poor composition, unbalanced or dull lighting, unrealistic anatomy, awkward proportions, incoherent shading or motion."
 
@@ -82,9 +76,6 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 from PIL import Image
-import matplotlib.pyplot as plt
-from matplotlib import animation
-import shutil
 import tempfile
 import cv2
 import hashlib
@@ -93,7 +84,7 @@ from dotenv import load_dotenv
 # Import our custom prompt improvement module
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Add parent directory to path
-from USER_DIR.prompt_improvement import analyze_and_improve_prompt, analyze_and_improve_prompt_from_image_object
+from USER_DIR.prompt_improvement import analyze_and_improve_prompt
 
 # Load environment variables (for OpenAI API key)
 load_dotenv()
@@ -157,7 +148,7 @@ INPUT_DIR = os.path.join(PROJECT_ROOT, "INPUT_DIR")  # Directory to look for inp
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "OUTPUT_DIR")
 MODEL_FILE = os.path.join(MODEL_DIR, "ltx-video-2b-v0.9.5.safetensors")
 
-print(f"Using directories:")
+print("Using directories:")
 print(f"  MODEL_DIR: {MODEL_DIR}")
 print(f"  INPUT_DIR: {INPUT_DIR}")
 print(f"  OUTPUT_DIR: {OUTPUT_DIR}")
@@ -496,7 +487,7 @@ if USE_PROMPT_ENHANCEMENT:
     print(f"OpenAI model: {OPENAI_MODEL}")
     print(f"Enhance all segments: {ENHANCE_ALL_SEGMENTS}")
 if SEGMENT_PROMPTS:
-    print(f"Using different prompts for each segment")
+    print("Using different prompts for each segment")
 print("=========================================\n")
 
 # Generate timestamp for this run
@@ -645,11 +636,11 @@ try:
         combined_path = os.path.join(OUTPUT_DIR, combined_filename)
         concatenate_videos(segment_video_paths, combined_path, fps=FPS)
         
-        print(f"\nAll processing complete!")
+        print("\nAll processing complete!")
         print(f"Individual segments saved in: {segment_dir}")
         print(f"Combined video saved to: {combined_path}")
     else:
-        print(f"\nAll processing complete!")
+        print("\nAll processing complete!")
         print(f"Video saved to: {segment_video_paths[0]}")
         
 except Exception as e:

@@ -18,7 +18,7 @@ import os
 import base64
 import json
 import argparse
-from typing import Dict, Any, Optional, Tuple
+from typing import Dict, Optional
 from io import BytesIO
 from PIL import Image
 import requests
